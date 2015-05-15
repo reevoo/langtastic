@@ -1,0 +1,10 @@
+#!/usr/bin/env ruby
+
+require 'langtastic'
+
+Langtastic.subtags.each do |subtag|
+  subtag.each do |field, value|
+    puts "#{field}: #{value}"
+  end
+  puts '============='
+end
