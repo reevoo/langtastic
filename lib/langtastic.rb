@@ -7,20 +7,22 @@ module Langtastic
   def subtags
     raw_subtags.map do |subtag|
       @last_field = []
-      subtag.map do |field|
-        if field.split(': ').size > 1
-          @this_field = field.split(': ')
-          if duplicate_field?
-            @last_field[1] += ", #{@this_field[1]}"
-            nil
+      Hash[
+        subtag.map do |field|
+          if field.split(': ').size > 1
+            @this_field = field.split(': ')
+            if duplicate_field?
+              @last_field[1] += ", #{@this_field[1]}"
+              nil
+            else
+              @last_field = @this_field
+            end
           else
-            @last_field = @this_field
+            @last_field[1] += field
+            nil
           end
-        else
-          @last_field[1] += field
-          nil
-        end
-      end.compact.to_h
+        end.compact
+      ]
     end
   end
 
